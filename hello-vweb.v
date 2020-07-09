@@ -2,18 +2,22 @@ module main
 
 import os
 import vweb
-import json
 
 const (
 	port = 8080
 )
 
+// This is necessary to contain all the structure of the web application.
+// vweb reqires some struct with the vweb vweb.Context to be passed to vweb.run.
 struct App {
 pub mut:
 	vweb vweb.Context
 }
 
+// V is going to look to run this main function in the "main" module.
 fn main() {
+	// If you want to use a hard-coded port, this part is unnecessary.
+	// However it is common for PORT to be set as an env var in deployments.
 	mut p := port
 	env_port := os.getenv('PORT')
 	if env_port != '' {
@@ -22,7 +26,7 @@ fn main() {
 	vweb.run<App>(p)
 }
 
-// Even if we don't use the init methods, we need to have them.
+// Even if we don't use the init methods, we still need to have them exist.
 pub fn (mut app App) init_once() {
 	// This will be called on server initialization, once.
 }
